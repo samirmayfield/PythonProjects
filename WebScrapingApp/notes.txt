@@ -1,0 +1,17 @@
+open mytk.py and run. an application will pop up asking you to enter a url link, class, tag, and name of your csv file.
+this app is very specific to this url: https://web.archive.org/web/20121007172955/https://www.nga.gov/collection/anZ1.htm
+
+if you change anZ1 to anZ2 you will be changing the page number. BodyText should be your class name, and tags you're searching
+for are 'a' tags (just type a). Enter in the name of the csv file you want to save this data to, press exportand watch a 
+spreadsheet appear in the same directory. Happy scraping!!
+
+
+
+
+
+
+
+
+
+
+
