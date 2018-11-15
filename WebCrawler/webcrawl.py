@@ -20,7 +20,7 @@ def scrape(url_name, csv_name):
         processed_urls = set()
 
         # a set of crawled emails
-        emails = set()
+        
 
         # move next url from the queue to the set of processed urls
         url = new_urls.popleft()
@@ -32,6 +32,15 @@ def scrape(url_name, csv_name):
         path = url[:url.rfind('/')+1] if '/' in parts.path else url
 
         # get url's content
+        if os.path.exists(csv_name):
+            f = csv.writer(open(csv_name, 'a'))
+            f.writerow([url])
+        # else write new file name along with colum names for data
+        else:
+            f = csv.writer(open(csv_name, 'w'))
+            f.writerow(["Links"])
+            f.writerow([url])
+
         print("Processing %s" % url)
         try:
             response = requests.get(url)
@@ -42,15 +51,9 @@ def scrape(url_name, csv_name):
         # extract all email addresses and add them into the resulting set
         # create a beutiful soup for the html document
         soup = BeautifulSoup(response.text)
-        new_emails = soup.find_all("[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text, re.I)
-        emails.update(new_emails, 'a')
+##        new_emails = soup.find_all("[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text, re.I)
+##        set(new_emails).update(new_emails, 'a')
         # write emails to csv file, must create index.csv at path location
-        if os.path.exists(csv_name):
-            f = csv.writer(open(csv_name, 'a'))
-        # else write new file name along with colum names for data
-        else:
-            f = csv.writer(open(csv_name, 'w'))
-            f.writerow(['Email'])
 
      
         # find and process all the anchors in the document
